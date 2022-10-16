@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-datos = pd.read_csv(r'data1.txt', delimiter=',', header= None)
+datos = pd.read_csv(r"C:/Users/panch/OneDrive/Escritorio/Trabajos/Trabajo1IA/Trabajo 1/data1.txt", delimiter=',', header= None)
 x = []
 y = []
 for i in datos[0]:
