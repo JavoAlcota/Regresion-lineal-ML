@@ -18,5 +18,3 @@ for j in datos[1]:
 # plt.show()
 
 cant_datos = np.size(x)
-
-#Holi uwu
