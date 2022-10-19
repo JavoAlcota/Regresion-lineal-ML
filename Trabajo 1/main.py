@@ -33,8 +33,8 @@ for i in range (1500):
         hyp = theta0 + theta1 * X[j][1]
         sumatoria0 += ((hyp - Y[j][0])* X[j][0])
         sumatoria1 += ((hyp - Y[j][0])* X[j][1])
-    theta0 += - (alfa/m) * sumatoria0
-    theta1 += - (alfa/m) * sumatoria1
+    theta0 -= (alfa/m) * sumatoria0
+    theta1 -= (alfa/m) * sumatoria1
 
     #funcion de costo
     sumatoria = 0
