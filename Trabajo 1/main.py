@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from matplotlib import style
 
 # lectura y guardado de datos en los arrays "x" e "y"
 datos = pd.read_csv(r'data1.txt', delimiter=',', header= None) #modificar ruta del archivo si es necesario
@@ -23,6 +24,7 @@ theta1 = 0
 alfa = 0.01
 min = 99999999
 num_iters = 1500
+
 def funcionCosto(t0, t1, m, X, Y):
     sum = 0
     for i in range (0, m):
@@ -55,7 +57,7 @@ def funcionGradiente(t0, t1, alpha, num_iters, m, X, Y):
         t0 -= (alpha/m) * sum0
         t1 -= (alpha/m) * sum1
         
-        costo = funcionCosto(t0, t1, m, X, Y)
+        costo = funcionCosto(t0, t1, m, X, Y) #calculo el costo llamando a la funcion correspondiente
         histCosto.append(costo)
         if (costo < min):
             min = costo
@@ -76,14 +78,41 @@ def graficoConRecta(x, y, t0, t1):
     plt.ylabel("Beneficio en $10.000s")
     plt.show()
 
+
+
+
 temp = funcionGradiente(theta0, theta1, alfa, num_iters, size, X, Y)  #guardo los valores thetas y el costo en un vector temporal
 theta0 = temp[0]
 theta1 = temp[1]
 costo = temp[2]
 
 
+tempIter = []
+tempCosto = []
+def graficoCosto(frame):
+    tempIter.append(frame*4)
+    tempCosto.append(histCosto[frame*4])
+    print(histIter[frame*4], histCosto[frame*4])
+    line.set_data(tempIter, tempCosto)
+    plt.xlabel("Iteraciones")
+    plt.ylabel("Funcion de costo")
+    figure.gca().relim()
+    figure.gca().autoscale_view()
+    return line,
 
+
+
+#grafica final con thetas definitivos
 graficoConRecta(x, Y, theta0, theta1)
+
+
+#grafica en tiempo real de la funcion de costo
+figure = plt.figure()
+line, = plt.plot_date(histIter, histCosto, '-')
+animacion = animation.FuncAnimation(figure, graficoCosto, interval = 1)
+plt.title("Función de costo vs Iteraciones")
+plt.show()
+
 
 print("theta0 =", "{0:.4f}".format(theta0))
 print("theta1 =", "{0:.4f}".format(theta1))
