@@ -90,15 +90,18 @@ costo = temp[2]
 tempIter = []
 tempCosto = []
 def graficoCosto(frame):
-    tempIter.append(frame*4)
-    tempCosto.append(histCosto[frame*4])
-    print(histIter[frame*4], histCosto[frame*4])
-    line.set_data(tempIter, tempCosto)
-    plt.xlabel("Iteraciones")
-    plt.ylabel("Funcion de costo")
-    figure.gca().relim()
-    figure.gca().autoscale_view()
-    return line,
+    if (frame*4 >= 1500):
+        animacion.event_source.stop()
+    else:
+        tempIter.append(frame*4)
+        tempCosto.append(histCosto[frame*4])
+        print(histIter[frame*4], histCosto[frame*4])
+        line.set_data(tempIter, tempCosto)
+        plt.xlabel("Iteraciones")
+        plt.ylabel("Funcion de costo")
+        figure.gca().relim()
+        figure.gca().autoscale_view()
+        return line,
 
 
 
