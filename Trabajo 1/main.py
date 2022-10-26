@@ -145,8 +145,8 @@ def valoresFinales():
     print("y =", tempp[0][0], "+",tempp[1][0],"* x")
     print("----------------------------------------------------------")
     print("------Valores de prueba------")
-    print("El beneficio para un área de",habitantes1,"habitantes, se espera un beneficio de: $",beneficio(habitantes1))
-    print("El beneficio para un área de",habitantes2,"habitantes, se espera un beneficio de: $",beneficio(habitantes2))
+    print("El beneficio para un área de",habitantes1,"es de: $",beneficio(habitantes1))
+    print("El beneficio para un área de",habitantes2,"es de: $",beneficio(habitantes2),"\n")
 
 def z(a, b, X, Y):
     m = np.size(x)
