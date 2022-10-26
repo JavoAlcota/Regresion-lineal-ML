@@ -130,8 +130,10 @@ def graficoRectaTR():
     plt.pause(6)
 
 def valoresFinales():
+    habitantes1 = 35000  #valor de prueba 1
+    habitantes2 = 70000  #valor de prueba 2
     print("----------------------------------------------------------")
-    print("Valores de theta por gradiente descendente:")
+    print("Valores de theta por gradiente descendente (",num_iters,"iteraciones )",":")
     print("theta0 =", theta0)
     print("theta1 =", theta1)
     print("y =",theta0,"+",theta1,"* x")
@@ -142,6 +144,9 @@ def valoresFinales():
     print("theta1 =", tempp[1][0])
     print("y =", tempp[0][0], "+",tempp[1][0],"* x")
     print("----------------------------------------------------------")
+    print("------Valores de prueba------")
+    print("El beneficio para un área de",habitantes1,"habitantes, se espera un beneficio de: $",beneficio(habitantes1))
+    print("El beneficio para un área de",habitantes2,"habitantes, se espera un beneficio de: $",beneficio(habitantes2))
 
 def z(a, b, X, Y):
     m = np.size(x)
@@ -150,6 +155,10 @@ def z(a, b, X, Y):
         hipotesis = a + b*X[i][1]
         sum += (Y[i][0] - hipotesis)**2
     return sum / (2*m)
+
+def beneficio(x):
+    return (theta0 + theta1 * (x/10000))*10000
+
 
 
 temp = funcionGradiente(theta0, theta1, alfa, num_iters, size, X, Y)  #guardo los valores thetas y el costo en un vector temporal
