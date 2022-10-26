@@ -1,5 +1,5 @@
 from re import X
-from traceback import print_tb
+from matplotlib import projections
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -62,25 +62,34 @@ def funcionGradiente(t0, t1, alpha, num_iters, m, X, Y):
 
 def graficoInicial(x, y):
     plt.scatter(x, y, color = 'red', marker='x')
+    hyp = []
+    yNormal = []
+    for i in x:
+        hyp.append(theta0 + theta1 * i)
+        yNormal.append(tempp[0][0] + tempp[1][0] * i)
+
+    plt.plot(x, hyp, label ="Gradiente descendente")
+    plt.plot(x, yNormal, color = "green", label ="Ecuación normal")
     plt.title("Diagrama de dispersión de datos de entrenamiento:")
     plt.xlabel("Población de la ciudad en 10.000s")
     plt.ylabel("Beneficio en $10.000s")
+    plt.legend()
     plt.show()
 
+#dibujado punto por punto del costo vs iteraciones
 def graficoCosto(frame):
-    if (frame*4 >= 1500):
+    if (frame*10 >= 1500):
         anim.event_source.stop()
     else:
-        tempIter.append(frame*4)
-        tempCosto.append(histCosto[frame*4])
-        print(histIter[frame*4], histCosto[frame*4])
+        tempIter.append(frame*10)
+        tempCosto.append(histCosto[frame*10])
+        #print(histIter[frame*10], histCosto[frame*10])
         line.set_data(tempIter, tempCosto)
-        plt.xlabel("Iteraciones")
-        plt.ylabel("Funcion de costo")
         figure.gca().relim()
         figure.gca().autoscale_view()
         return line,
     
+#valores the theta 0 y theta 1 usando ecuación normal
 def ecuacionNormal():
     xtras = np.transpose(X)
     mult = np.dot(xtras,X)
@@ -118,22 +127,35 @@ def graficoRectaTR():
         figure.canvas.flush_events()
         newY=[]
         time.sleep(0.001)
-    plt.pause(1000)
+    plt.pause(6)
+
+def valoresFinales():
+    print("----------------------------------------------------------")
+    print("Valores de theta por gradiente descendente:")
+    print("theta0 =", theta0)
+    print("theta1 =", theta1)
+    print("y =",theta0,"+",theta1,"* x")
+    print("Función de costo =", costo)
+    print("----------------------------------------------------------")
+    print("Valores de theta por ecuación normal:")
+    print("theta0 =", tempp[0][0])
+    print("theta1 =", tempp[1][0])
+    print("y =", tempp[0][0], "+",tempp[1][0],"* x")
+    print("----------------------------------------------------------")
+
+def z(a, b, X, Y):
+    m = np.size(x)
+    sum = 0
+    for i in range (m):
+        hipotesis = a + b*X[i][1]
+        sum += (Y[i][0] - hipotesis)**2
+    return sum / (2*m)
+
 
 temp = funcionGradiente(theta0, theta1, alfa, num_iters, size, X, Y)  #guardo los valores thetas y el costo en un vector temporal
 theta0 = temp[0]
 theta1 = temp[1]
 costo = temp[2]
-
-#grafico 3D
-
-
-
-
-#grafico de contorno
-
-
-
 
 #Ecuacion normal
 tempp = ecuacionNormal()
@@ -153,14 +175,31 @@ plt.show()
 #grafico de recta en tiempo real
 graficoRectaTR()
 
+#grafico 3D
+plt.close()
+fig = plt.figure()
+ax = Axes3D(fig)
+fig.add_axes(ax)
+aux0 = []
+aux1 = []
+for i in range (1500):
+    if (i*50<1500):
+        aux0.append(histt0[i*50])
+        aux1.append(histt1[i*50])
+aux0, aux1 = np.meshgrid(aux0, aux1)
+ax.set_xlabel('Theta 0')
+ax.set_ylabel('Theta 1')
+ax.set_zlabel('J(θ)')
+ax.plot_surface(aux0, aux1, z(aux0, aux1, X, Y))
+ax.scatter(histt0, histt1, histCosto, color="r")
+plt.show()
 
+#grafico de contorno
+fig, ax = plt.subplots(1, 1) 
+ax.scatter(histt0, histt1, color="r")
+ax.contour(aux0, aux1, z(aux0, aux1, X, Y))
+ax.set_xlabel('theta 0') 
+ax.set_ylabel('theta1')
 
-print("\nValores de theta por gradiente descendente:")
-print("theta0 =", "{0:.4f}".format(theta0))
-print("theta1 =", "{0:.4f}".format(theta1))
-print("y =",theta0,"+",theta1,"* x")
-print("Función de costo =", "{0:.4f}".format(costo))
-print("\nValores de theta por ecuación normal:")
-print("theta0 =", "{0:.4f}".format(tempp[0][0]))
-print("theta0 =", "{0:.4f}".format(tempp[1][0]))
-print("y =", tempp[0][0], "+",tempp[1][0],"* x")
+# #valores de theta por gradiente descendete y por ecuación normal
+valoresFinales()
