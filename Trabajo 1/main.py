@@ -1,5 +1,4 @@
 from re import X
-from matplotlib import projections
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -23,7 +22,6 @@ for j in datos[1]:
 theta0 = 0
 theta1 = 0
 alfa = 0.01
-min = 99999999
 num_iters = 1500
 
 def funcionCosto(t0, t1, m, X, Y):
