@@ -237,7 +237,3 @@ ax.set_ylabel("theta1")
 
 # #valores de theta por gradiente descendete y por ecuación normal
 valoresFinales()
-
-# test para agregar Git a vscode
-aaa = 10
-# otro test
